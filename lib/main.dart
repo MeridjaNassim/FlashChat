@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flash_chat/screens/welcome_screen.dart';
-import 'package:flash_chat/screens/login_screen.dart';
-import 'package:flash_chat/screens/registration_screen.dart';
-import 'package:flash_chat/screens/chat_screen.dart';
 
-void main() => runApp(FlashChat());
+import 'screens/chat_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/registration_screen.dart';
+import 'screens/welcome_screen.dart';
+import 'package:flutter/services.dart';
+
+void main(){
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
+      runApp(FlashChat());
+    });
+  
+}
 
 class FlashChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        textTheme: TextTheme(
-          body1: TextStyle(color: Colors.black54),
-        ),
-      ),
-      home: WelcomeScreen(),
+    
+      initialRoute: WelcomeScreen.ROUTE_ID,
+      routes : {
+        WelcomeScreen.ROUTE_ID : (context) => WelcomeScreen(),
+        LoginScreen.ROUTE_ID: (context)=> LoginScreen(),
+        RegistrationScreen.ROUTE_ID: (context)=> RegistrationScreen(),
+        ChatScreen.ROUTE_ID : (context)=> ChatScreen()
+      }
     );
   }
 }

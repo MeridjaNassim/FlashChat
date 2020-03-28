@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
-
+import '../widgets/button.dart';
+import 'login_screen.dart';
+import 'registration_screen.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 class WelcomeScreen extends StatefulWidget {
+  static final String ROUTE_ID = 'welcome_screen';
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin{
+
+  @override
+  void initState() {
+    super.initState();
+    
+  }
+  @override
+  void dispose() { 
+   
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +33,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Container(
-                  child: Image.asset('images/logo.png'),
-                  height: 60.0,
+                Hero(
+                    tag: "Logo",
+                    child: Container(
+                    child: Image.asset('images/logo.png'),
+                    height: 60,
+                  ),
                 ),
-                Text(
-                  'Flash Chat',
-                  style: TextStyle(
+                TypewriterAnimatedTextKit(
+                  speed: Duration(milliseconds : 300),
+                  isRepeatingAnimation: false,
+                  text :['Flash Chat'],
+                  textStyle: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                   ),
@@ -34,45 +54,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             SizedBox(
               height: 48.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                elevation: 5.0,
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to login screen.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Log In',
-                  ),
-                ),
-              ),
+            ReusableButton(
+              onPress: ()=>Navigator.pushNamed(context, LoginScreen.ROUTE_ID),
+              color : Colors.lightBlueAccent,
+              text : 'Log In'
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to registration screen.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Register',
-                  ),
-                ),
-              ),
-            ),
+            ReusableButton(
+              onPress: ()=>Navigator.pushNamed(context, RegistrationScreen.ROUTE_ID),
+              color : Colors.blueAccent,
+              text : 'Register'
+            )
+,
           ],
         ),
       ),
     );
   }
 }
+
